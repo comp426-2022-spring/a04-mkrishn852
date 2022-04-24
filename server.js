@@ -62,7 +62,7 @@ app.use( (req, res, next) => {
       res.statusMessage = 'OK';
       res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
       res.end(res.statusCode+ ' ' +res.statusMessage)
-  });
+  })
 
 // ENDPOINTS
 // endpoints for if debug == true
