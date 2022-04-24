@@ -1,12 +1,15 @@
+// Set up required constants
 const express = require("express")
 const app = express()
 const db = require("./database.js");
 const morgan = require('morgan');
 const fs = require('fs')
 
+// Use Express to read urlencoded and json
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
+// Create and specify port
 const args = require('minimist')(process.argv.slice(2))
 args['port', 'debug', 'log', 'help']
 const port = args.port || process.env.PORT || 5555;
