@@ -60,45 +60,48 @@ app.use( (req, res, next) => {
       res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
       res.end(res.statusCode+ ' ' +res.statusMessage)
   });
-  
 
-  
-app.get("/app/", (req, res) => {
-  res.status(200).end("OK");
-  res.type("text/plain");
+// ENDPOINTS
+
+// endpoints for if debug == true
+if (args.debug == true) {
+    app.get('/app/log/access', (req, res) => {
+        try {
+            const stmt = db.prepare('SELECT * FROM accesslog').all()
+            res.status(200).json(stmt)
+            } catch(e) {
+              console.error(e)
+            }
+    })
+
+    app.get('/app/error', (req, res) => {
+        res.status(500);
+        throw new Error('Error test successful.');
+    })
+}
+
+app.get('/app/flip/', (req, res) => {
+    let flip = coinFlip();
+    res.status(200).json({'flip' : flip})
 });
 
-app.get('/app/flip', (req, res) => {
-  var flip = coinFlip()
-  res.status(200).json({
-      'flip': flip
-  })
-})
-
+// Endpoint returns json object with raw number of flips and summary 
 app.get('/app/flips/:number', (req, res) => {
-  var realFlips = coinFlips(req.params.number)
-  var summaryFlips = countFlips(realFlips)
-  res.status(200).json({
-      'raw': realFlips,
-      'summary': summaryFlips
-  })
+	let raw_flips = coinFlips(req.params.number);
+    let sum_flips = countFlips(raw_flips)
+    res.json({'raw': raw_flips, 'summary': sum_flips})
 });
 
+// Return result of flip
 app.get('/app/flip/call/heads', (req, res) => {
-  res.status(200).json(flipACoin('heads'))
+    res.status(200).json(flipACoin('heads'));
 })
 
 app.get('/app/flip/call/tails', (req, res) => {
-  res.status(200).json(flipACoin('tails'))
+    res.status(200).json(flipACoin('tails'));
 })
 
-// Default response for any other request
-app.use(function(req, res){
-  res.status(404).send('404 NOT FOUND')
-});
-
-
-/*Coin functions*/
+// Coin functions
 
 function coinFlip() {
   var result;
