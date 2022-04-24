@@ -65,7 +65,6 @@ app.use( (req, res, next) => {
   });
 
 // ENDPOINTS
-
 // endpoints for if debug == true
 if (args.debug == true) {
     app.get('/app/log/access', (req, res) => {

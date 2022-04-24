@@ -1,6 +1,5 @@
 "use strict";
-const Database = require("better-sqlite3");
-
+const Database = require("better-sqlite3"); 
 const db = new Database('log.db');
 
 // Is the database initialized or do we need to initialize it?
