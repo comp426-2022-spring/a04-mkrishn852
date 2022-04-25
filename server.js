@@ -5,7 +5,7 @@ const db = require("./database.js");
 const morgan = require('morgan');
 const fs = require('fs')
 
-// Use Express to read urlencoded and json
+// Use Express to read urlencoded and json  
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
